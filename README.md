@@ -1,8 +1,58 @@
 # minidebian
 minidebian
 
+# Installation in English
 
-Installation på Dansk
+
+**Step 1: Preparation:**
+
+1. **Download Debian netboot mini.iso:** Go to Debian's official netboot page: [https://www.debian.org/distrib/netinst#netboot](https://www.debian.org/distrib/netinst#netboot). Choose your architecture (usually amd64 for modern computers), and download the netboot mini.iso file.
+
+**Step 2: Create a Hard Disk Image:**
+
+1. **Create an 8 GB hard disk image:** Open a terminal on your computer and navigate to a directory where you want to save the hard disk image file. Run the following command to create an 8 GB hard disk image:
+
+   ```bash
+   qemu-img create debian.img 8G
+   ```
+
+2. **Install QEMU:** If you don't already have QEMU installed, you can install it by running the following command (the command might vary depending on your system):
+
+   ```bash
+   sudo apt-get install qemu-system-x86
+   ```
+
+**Step 3: Start QEMU with netboot mini.iso:**
+
+1. **Start QEMU:** Run the following command to start QEMU with the created hard disk image and Debian netboot mini.iso:
+
+   ```bash
+   qemu-system-x86_64 -hda debian.img -boot d -cdrom mini.iso -m 1024
+   ```
+
+   This will start a virtual machine with 1 GB of RAM and boot from the netboot mini.iso.
+
+2. **Install Debian:** Follow the installation process as you did before in the previous guide. Choose your settings, and when you reach the partitioning step, select "Guided - use entire disk" and then choose your virtual hard disk (usually `/dev/sda`).
+
+3. **Finish Installation:** Complete the installation process and remove the netboot mini.iso when prompted. Then restart the virtual machine.
+
+**Step 4: Use Your Virtual Debian Installation:**
+
+1. **Start the Virtual Machine:** Navigate to the directory where you created the hard disk image file and run the command:
+
+   ```bash
+   qemu-system-x86_64 -hda debian.img -m 1024
+   ```
+
+   This will start your virtual Debian installation.
+
+2. **Log In:** When the virtual machine starts, you'll be prompted to log in with the user and password you created during the installation.
+
+3. **Use Debian:** Now you can use your virtual Debian installation just like a regular Debian installation.
+
+Remember that QEMU commands can vary depending on your system and preferences. Adjust the commands if necessary, and make sure you have sufficient technical knowledge about your computer and virtual machines before you begin.
+
+# Installation på Dansk
 
 **Trin 1: Forberedelse:**
 
