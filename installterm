@@ -1,0 +1,17 @@
+
+
+#!/bin/bash
+
+# Installer programmer
+sudo apt update
+sudo apt install fish micro ranger ncdu tmux -y
+
+# Fjern nano
+sudo apt remove nano -y
+sudo apt autoremove -y
+
+echo "Installation er færdig."
+
+# set fish som standart
+echo "/usr/bin/fish" | sudo tee -a /etc/shells
+chsh -s /usr/bin/fish
