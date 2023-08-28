@@ -4,7 +4,7 @@
 
 # Installer programmer
 sudo apt update
-sudo apt install fish micro ranger ncdu tmux -y
+sudo apt install fish micro ranger ncdu tmux mc -y
 
 # Fjern nano
 sudo apt remove nano -y
