@@ -1,0 +1,78 @@
+# Localization
+d-i debian-installer/locale string da_DK.UTF-8
+d-i console-setup/ask_detect boolean false
+d-i keyboard-configuration/xkb-keymap select dk
+
+# Network configuration
+d-i netcfg/choose_interface select auto
+d-i netcfg/get_hostname string debian
+d-i netcfg/get_domain string unassigned-domain
+
+# Mirror settings
+d-i mirror/country string manual
+d-i mirror/http/hostname string deb.debian.org
+d-i mirror/http/directory string /debian
+d-i mirror/http/proxy string
+
+# Account setup
+d-i passwd/root-password password 123456
+d-i passwd/root-password-again password 123456
+d-i passwd/make-user boolean true
+d-i passwd/user-fullname string Frank
+d-i passwd/username string frank
+d-i passwd/user-password password 123456
+d-i passwd/user-password-again password 123456
+
+# Clock and time zone setup
+d-i clock-setup/utc boolean true
+d-i time/zone string Europe/Copenhagen
+d-i clock-setup/ntp boolean true
+
+# Partitioning
+d-i partman-auto/method string regular
+d-i partman-auto/expert_recipe string                         \
+      boot-root ::                                            \
+              40 50 100 ext4                                  \
+                      $primary{ } $bootable{ }                \
+                      method{ format } format{ }              \
+                      use_filesystem{ } filesystem{ ext4 }    \
+                      mountpoint{ / }                         \
+              .                                               \
+              512 1024 1024 linux-swap                        \
+                      method{ swap } format{ }                \
+              .                                               \
+              500 10000 1000000000 ext4                       \
+                      method{ format } format{ }              \
+                      use_filesystem{ } filesystem{ ext4 }    \
+                      mountpoint{ /home }                     \
+              .
+
+d-i partman/confirm boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm_nooverwrite boolean true
+
+# Base system installation
+d-i base-installer/kernel/override-image string linux-image-amd64
+
+# Apt setup
+d-i apt-setup/services-select multiselect
+d-i apt-setup/non-free boolean true
+d-i apt-setup/contrib boolean true
+d-i apt-setup/use_mirror boolean true
+d-i apt-setup/security_host string security.debian.org
+
+# Package selection
+tasksel tasksel/first multiselect standard, ssh-server
+
+# Finishing up the installation
+d-i grub-installer/only_debian boolean true
+d-i grub-installer/with_other_os boolean true
+
+# Reboot after installation
+d-i finish-install/reboot_in_progress note
+
+# Package upgrades
+d-i pkgsel/upgrade select none
+
+# Preseeding only certain steps
+d-i preseed/late_command string in-target echo 'frank ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/frank
